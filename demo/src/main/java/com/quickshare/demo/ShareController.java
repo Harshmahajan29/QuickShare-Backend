@@ -10,21 +10,32 @@ import java.util.Map;
 @RequestMapping("/share")
 public class ShareController {
 
-    @Autowired
-    private ShareService service;
+@Autowired
+private ShareService service;
 
-    @PostMapping("/share")
-    public String createShare(@RequestBody Map<String,String> body){
+// Create share code
+@PostMapping
+public String createShare(@RequestBody Map<String, String> body) {
 
-        String text = body.get("text");
+    String text = body.get("text");
 
-        return service.generateCode(text);
+    if (text == null || text.isEmpty()) {
+        return "Text cannot be empty";
     }
 
-    @GetMapping("/share/{code}")
-    public String getShare(@PathVariable String code){
+    return service.generateCode(text);
+}
 
-        return service.getText(code);
+@GetMapping("/{code}")
+public String getShare(@PathVariable String code) {
+
+    String result = service.getText(code);
+
+    if (result == null) {
+        return "Code not found";
     }
+
+    return result;
+}
 
 }
