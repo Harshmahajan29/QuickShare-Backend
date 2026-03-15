@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
+@RequestMapping("/share")
 public class ShareController {
 
     @Autowired
